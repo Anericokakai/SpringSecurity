@@ -2,8 +2,10 @@ package com.springSecurity.springSecurity_second.controller;
 
 import com.springSecurity.springSecurity_second.Exceptions.UserExistException;
 import com.springSecurity.springSecurity_second.models.Users;
+import com.springSecurity.springSecurity_second.service.AuthenticationService;
 import com.springSecurity.springSecurity_second.service.UserService;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
@@ -16,25 +18,19 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/fastApi/v1/all")
-
+@RequestMapping("/fastApi/v1")
+@RequiredArgsConstructor
 public class UserController {
 
+    private final AuthenticationService service;
     @Autowired
     private UserService userService;
 
 
-    @GetMapping("/all")
-    public List<Users> findAllUsers(){
-
-        return  userService.findAllUsers();
+    @PostMapping ("/authenticate")
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody AuthenticationRequest request){
+return ResponseEntity.status(HttpStatus.ACCEPTED.value()).body(service.authenticate(request));
     }
-////    GET USER BY NAME
-//    @GetMapping("/{name}")
-//    public Optional<Users> findBYUsername(@PathVariable String name){
-//
-//        return userService.findUserByName( name);
-//    }
 
 
 //    save new user

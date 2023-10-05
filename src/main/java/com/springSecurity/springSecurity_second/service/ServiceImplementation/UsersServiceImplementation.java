@@ -2,9 +2,12 @@ package com.springSecurity.springSecurity_second.service.ServiceImplementation;
 
 import com.springSecurity.springSecurity_second.Exceptions.UserExistException;
 import com.springSecurity.springSecurity_second.Repository.UserRepository;
+import com.springSecurity.springSecurity_second.config.JwtService;
 import com.springSecurity.springSecurity_second.models.Users;
 import com.springSecurity.springSecurity_second.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +15,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UsersServiceImplementation implements UserService {
-
+private  final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
     @Autowired
     private UserRepository userRepository;
 
@@ -35,7 +40,14 @@ public class UsersServiceImplementation implements UserService {
 
         }
 
-        Users users1=userRepository.save(users);
+        var users1= Users.builder()
+                .name(users.getName())
+                .email(users.getEmail())
+                .password(passwordEncoder.encode(users.getPassword()))
+                .role(users.getRole())
+                .build();
+        userRepository.save(users1);
+
 
 //        check if the user is  saved
         if(!Objects.equals(users1.getName(), "")){

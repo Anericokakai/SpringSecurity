@@ -28,7 +28,7 @@ public class SecurityConfig {
 //        1.DISABLE CSRF FAST
         http.csrf(AbstractHttpConfigurer::disable)
 //WHITE LIST APIS THAT ARE NOT TO BE SECURED
-                .authorizeHttpRequests(auth->auth.requestMatchers("/fastApi/v1/all/**")
+                .authorizeHttpRequests(auth->auth.requestMatchers("/fastApi/v1/**")
 
                         // PERMIT ANY URL THAT COMES WITH THE URL ABOVE
                         .permitAll()
