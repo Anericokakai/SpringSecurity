@@ -10,7 +10,7 @@ public interface UserService {
 
     List<Users> findAllUsers();
 
-    Optional<Users> findUserByName (String name);
+//    Optional<Users> findUserByName (String name);
 
     String saveUser (Users users);
 }

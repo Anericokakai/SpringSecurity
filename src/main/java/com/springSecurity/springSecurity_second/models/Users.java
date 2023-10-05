@@ -32,8 +32,6 @@ public class Users implements UserDetails {
     @Column (name = "password")
     private String password;
 
-
-    @Column(name = "role")
 //    type string
 @Enumerated(EnumType.STRING)
     private Role role;
